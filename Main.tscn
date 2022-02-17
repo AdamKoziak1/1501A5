@@ -1,41 +1,96 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://DropZone.tscn" type="PackedScene" id=1]
 [ext_resource path="res://AC.tscn" type="PackedScene" id=2]
 [ext_resource path="res://AS.tscn" type="PackedScene" id=3]
+[ext_resource path="res://SpawnAC.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Main.gd" type="Script" id=5]
 
 [node name="Main" type="Node2D"]
+script = ExtResource( 5 )
 
-[node name="DropZone" parent="." instance=ExtResource( 1 )]
+[node name="(1,1)" parent="." instance=ExtResource( 1 )]
 position = Vector2( 100, 100 )
 
-[node name="DropZone2" parent="." instance=ExtResource( 1 )]
+[node name="(1,2)" parent="." instance=ExtResource( 1 )]
 position = Vector2( 200, 100 )
 
-[node name="DropZone3" parent="." instance=ExtResource( 1 )]
+[node name="(1,3)" parent="." instance=ExtResource( 1 )]
 position = Vector2( 300, 100 )
 
-[node name="DropZone4" parent="." instance=ExtResource( 1 )]
+[node name="(1,4)" parent="." instance=ExtResource( 1 )]
 position = Vector2( 400, 100 )
 
-[node name="DropZone5" parent="." instance=ExtResource( 1 )]
+[node name="(1,5)" parent="." instance=ExtResource( 1 )]
 position = Vector2( 500, 100 )
 
-[node name="DropZone6" parent="." instance=ExtResource( 1 )]
+[node name="(2,1)" parent="." instance=ExtResource( 1 )]
 position = Vector2( 100, 200 )
 
-[node name="DropZone7" parent="." instance=ExtResource( 1 )]
+[node name="(2,2)" parent="." instance=ExtResource( 1 )]
 position = Vector2( 200, 200 )
 
-[node name="DropZone8" parent="." instance=ExtResource( 1 )]
+[node name="(2,3)" parent="." instance=ExtResource( 1 )]
 position = Vector2( 300, 200 )
 
-[node name="DropZone9" parent="." instance=ExtResource( 1 )]
+[node name="(2,4)" parent="." instance=ExtResource( 1 )]
 position = Vector2( 400, 200 )
 
-[node name="DropZone10" parent="." instance=ExtResource( 1 )]
+[node name="(2,5)" parent="." instance=ExtResource( 1 )]
 position = Vector2( 500, 200 )
 
-[node name="AC" parent="." instance=ExtResource( 2 )]
+[node name="(3,1)" parent="." instance=ExtResource( 1 )]
+position = Vector2( 100, 300 )
+
+[node name="(3,2)" parent="." instance=ExtResource( 1 )]
+position = Vector2( 200, 300 )
+
+[node name="(3,3)" parent="." instance=ExtResource( 1 )]
+position = Vector2( 300, 300 )
+
+[node name="(3,4)" parent="." instance=ExtResource( 1 )]
+position = Vector2( 400, 300 )
+
+[node name="(3,5)" parent="." instance=ExtResource( 1 )]
+position = Vector2( 500, 300 )
+
+[node name="(4,1)" parent="." instance=ExtResource( 1 )]
+position = Vector2( 100, 400 )
+
+[node name="(4,2)" parent="." instance=ExtResource( 1 )]
+position = Vector2( 200, 400 )
+
+[node name="(4,3)" parent="." instance=ExtResource( 1 )]
+position = Vector2( 300, 400 )
+
+[node name="(4,4)" parent="." instance=ExtResource( 1 )]
+position = Vector2( 400, 400 )
+
+[node name="(4,5)" parent="." instance=ExtResource( 1 )]
+position = Vector2( 500, 400 )
+
+[node name="(5,1)" parent="." instance=ExtResource( 1 )]
+position = Vector2( 100, 500 )
+
+[node name="(5,2)" parent="." instance=ExtResource( 1 )]
+position = Vector2( 200, 500 )
+
+[node name="(5,3)" parent="." instance=ExtResource( 1 )]
+position = Vector2( 300, 500 )
+
+[node name="(5,4)" parent="." instance=ExtResource( 1 )]
+position = Vector2( 400, 500 )
+
+[node name="(5,5)" parent="." instance=ExtResource( 1 )]
+position = Vector2( 500, 500 )
+
+[node name="SpawnAC" parent="." groups=["SpawnAC"] instance=ExtResource( 4 )]
+position = Vector2( 800, 100 )
 
 [node name="AS" parent="." instance=ExtResource( 3 )]
+position = Vector2( 897, 201 )
+
+[node name="AC" parent="." instance=ExtResource( 2 )]
+position = Vector2( 896, 94 )
+
+[connection signal="deselected" from="SpawnAC" to="." method="_on_SpawnAC_deselected"]
