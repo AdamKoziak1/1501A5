@@ -1,6 +1,7 @@
 extends Position2D
 
 signal deselected
+var price
 
 func _draw():
 	draw_circle(Vector2.ZERO, 20, Color.blanchedalmond)
@@ -12,4 +13,5 @@ func select():
 	
 func deselect():
 	modulate = Color.white
+	#add to total cost
 	#emit_signal("deselected")

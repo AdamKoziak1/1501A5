@@ -4,6 +4,8 @@ var selected = false
 var rest_point
 var spawn_point
 var rest_nodes = []
+var resistance
+var edges = {0:true, (PI/2):false, PI:false, (3*PI/2):true}
 
 func _ready():
 	rest_nodes = get_tree().get_nodes_in_group("zone")
