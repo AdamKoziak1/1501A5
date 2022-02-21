@@ -6,6 +6,7 @@ var spawn_point
 var rest_nodes = []
 var resistance
 var edges = {0:true, (PI/2):false, PI:false, (3*PI/2):true}
+var moved = false #whether or not it's still in the inventory
 
 func _ready():
 	rest_nodes = get_tree().get_nodes_in_group("zone")
@@ -34,9 +35,19 @@ func _input(event):
 		if event.button_index == BUTTON_LEFT and not event.pressed:
 			selected = false
 			var shortest_dist = 75
-			for child in rest_nodes:
+			for child in spawn_point:
 				var distance = global_position.distance_to(child.global_position)
 				if distance < shortest_dist:
 					child.select()
+					rest_point = child.global_position
+					shortest_dist = distance
+			for child in rest_nodes:
+				var distance = global_position.distance_to(child.global_position)
+				if distance < shortest_dist:
+					if moved == false:
+						child.outOfInventorySelect()
+						moved = true
+					else:
+						child.select()
 					rest_point = child.global_position
 					shortest_dist = distance

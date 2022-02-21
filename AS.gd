@@ -9,7 +9,7 @@ func _ready():
 	rest_nodes = get_tree().get_nodes_in_group("zone")
 	spawn_point = get_tree().get_nodes_in_group("SpawnAC")
 	rest_point = spawn_point[0].global_position
-	spawn_point[0].select()
+	#spawn_point[0].select()
 	rotation = 0
 
 func _on_Area2D_input_event(viewport, event, shape_idx):
