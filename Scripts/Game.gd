@@ -35,7 +35,7 @@ func grid_to_pixel(x, y):
 
 # Convert pixel values to grid coordinates
 func pixel_to_grid(x, y):
-	return Vector2((x - x_start) / x_off, (y - y_start) / y_off)
+	return Vector2(round((x - x_start) / x_off), round((y - y_start) / y_off))
 
 # Draw each tile in the level grid
 func draw_level():
