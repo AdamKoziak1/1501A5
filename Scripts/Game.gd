@@ -36,7 +36,7 @@ func gen_level2(grid):
 	return grid
 
 func _ready():
-	level_grid = gen_level2(gen_empty_grid())
+	level_grid = gen_level1(gen_empty_grid())
 	
 	draw_level()
 	
@@ -80,7 +80,8 @@ func calculate_price():
 	var price = 0
 	for i in range(grid_size):
 		for j in range(grid_size):
-			price += level_grid[i][j].price
+			if level_grid[i][j].movable:
+				price += level_grid[i][j].price
 	return price
 
 func validate_circuit():
