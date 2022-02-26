@@ -41,7 +41,7 @@ func _ready():
 	draw_level()
 	
 	print(calculate_price())
-	validate_circit()
+	validate_circuit()
 
 # Check for input every frame
 func _process(delta):
@@ -83,7 +83,7 @@ func calculate_price():
 			price += level_grid[i][j].price
 	return price
 
-func validate_circit():
+func validate_circuit():
 	var flag = true
 	for j in range(grid_size):
 		for i in range(grid_size):
@@ -98,7 +98,7 @@ func validate_circit():
 					var direction = dirs[d];
 					var x = i + direction.x
 					var y = j + direction.y
-					if xnor(tile.valid[(d - tile.dir)%4], get_valid(x, y, d)):
+					if xnor(tile.valid[(d - tile.dir)%4], get_valid(x, y, d, tile.type)):
 						connections+=1
 				if connections != 2:
 					tile_flag = false
@@ -109,7 +109,7 @@ func validate_circit():
 					var direction = dirs[d];
 					var x = i + direction.x
 					var y = j + direction.y
-					if not xnor(tile.valid[(d - tile.dir)%4], get_valid(x, y, d)):
+					if not xnor(tile.valid[(d - tile.dir)%4], get_valid(x, y, d, tile.type)):
 						tile_flag = false
 						flag = false
 				if not tile_flag:
@@ -119,12 +119,32 @@ func validate_circit():
 func xnor(a, b):
 	return (a and b) or ((not a) and (not b))
 	
-func get_valid(x, y, d):
+func get_valid(x, y, d, type1):
 	if (not x in range(5)) or (not y in range(5)):
 		return false
 	d = (d-2)%4
 	var tile = level_grid[x][y]
-	return tile.valid[(d - tile.dir)%4]
+	if not tile.valid[(d - tile.dir)%4]:
+		return false
+	var type2 = tile.type
+	if ((type1 in ["ac", "as", "a3"]) and (type2 in ["cc", "cs", "c3"])) or ((type2 in ["ac", "as", "a3"]) and (type1 in ["cc", "cs", "c3"])):
+		return false;
+	return true
+
+func find_battery():
+	for i in range(grid_size):
+		for j in range(grid_size):
+			if level_grid[i][j].type == "battery":
+				return Vector2(i, j)
+
+func analyze_circuit():
+	if not validate_circuit():
+		print("circuit is not valid")
+		return
+	var start = find_battery()
+	
+	
+	
 
 func define_tiles():
 	return {
@@ -173,12 +193,12 @@ func define_tiles():
 			"price":0,
 			"resistance":0,
 			"valid":[false, false, false, false]}, # none
-		"largeres":
+		"res_large":
 			{"scene":preload("res://Scenes/ResistorLarge.tscn"), 
 			"price":15,
 			"resistance":2,
 			"valid":[true, false, true, false]}, # right and left
-		"smallres":
+		"res_small":
 			{"scene":preload("res://Scenes/ResistorSmall.tscn"), 
 			"price":10,
 			"resistance":1,
