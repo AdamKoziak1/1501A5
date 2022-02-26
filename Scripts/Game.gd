@@ -12,10 +12,11 @@ var tiles = define_tiles()
 var dirs = [Vector2(1,0), Vector2(0,-1), Vector2(-1,0), Vector2(0,1)]
 
 func _ready():
+	level_grid = gen_empty_grid()
 	#level_grid = gen_level1(gen_empty_grid())
 	#level_grid = level1_solution(gen_level1(gen_empty_grid()))
 	#level_grid = gen_level2(gen_empty_grid())
-	level_grid = level2_solution(gen_level2(gen_empty_grid()))
+	#level_grid = level2_solution(gen_level2(gen_empty_grid()))
 
 # Check for input every frame
 func select_level1():
@@ -26,8 +27,8 @@ func select_level2():
 	
 func _process(delta):
 	draw_level()
-	calculate_price()
-	analyze_circuit()
+	#calculate_price()
+	#analyze_circuit()
 	
 
 # Convert grid coordinates to pixel values
@@ -136,7 +137,10 @@ func analyze_circuit():
 	
 	print("circuit is valid")
 	var start = find_battery()
-	
+	var d = (level_grid[start.x][start.y].dir + 2)%4 # facing out of the negative terminal to follow current flow
+
+func _on_HUD_analyze():
+	analyze_circuit()
 	
 func gen_empty_grid():
 	var grid = []
@@ -255,5 +259,4 @@ func define_tiles():
 			"resistance":0.2,
 			"valid":[true, false, true, false]}, # right and left
 	}
-
 
