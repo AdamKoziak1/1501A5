@@ -27,21 +27,49 @@ func gen_level1(grid):
 	grid[0][3] = gen_tile("bulb", 0, false)
 	grid[2][1] = gen_tile("filled", 0, false)
 	return grid
+	
+func level1_solution(grid):
+	grid[1][0] = gen_tile("splice", 0, true)
+	grid[1][2] = gen_tile("res_small", 0, true)
+	grid[1][3] = gen_tile("as", 0, true)
+	grid[2][0] = gen_tile("as", 0, true)
+	grid[2][2] = gen_tile("a3", 0, true)
+	grid[2][3] = gen_tile("ac", 2, true)
+	grid[3][0] = gen_tile("ac", 3, true)
+	grid[3][1] = gen_tile("as", 1, true)
+	grid[3][2] = gen_tile("ac", 2, true)
+	return grid
 
 func gen_level2(grid):
-	grid[2][0] = gen_tile("battery", 0, false)
 	grid[0][3] = gen_tile("bulb", 0, false)
-	grid[2][2] = gen_tile("bulb", 0, false)
 	grid[1][3] = gen_tile("a3", 2, false)
+	grid[2][0] = gen_tile("battery", 0, false)
+	grid[2][2] = gen_tile("bulb", 0, false)
+	return grid
+
+func level2_solution(grid):
+	grid[0][0] = gen_tile("ac", 0, true)
+	grid[0][1] = gen_tile("as", 1, true)
+	grid[0][2] = gen_tile("as", 1, true)
+	grid[1][0] = gen_tile("as", 0, true)
+	grid[1][2] = gen_tile("ac", 0, true)
+	grid[2][3] = gen_tile("res_small", 0, true)
+	grid[3][0] = gen_tile("ac", 3, true)
+	grid[3][1] = gen_tile("as", 1, true)
+	grid[3][2] = gen_tile("a3", 3, false)
+	grid[3][3] = gen_tile("ac", 2, true)
 	return grid
 
 func _ready():
-	level_grid = gen_level1(gen_empty_grid())
+	#level_grid = gen_level1(gen_empty_grid())
+	level_grid = level1_solution(gen_level1(gen_empty_grid()))
+	#level_grid = gen_level2(gen_empty_grid())
+	#level_grid = level2_solution(gen_level2(gen_empty_grid()))
 	
 	draw_level()
+	calculate_price()
+	analyze_circuit()
 	
-	print(calculate_price())
-	validate_circuit()
 
 # Check for input every frame
 func _process(delta):
@@ -82,6 +110,7 @@ func calculate_price():
 		for j in range(grid_size):
 			if level_grid[i][j].movable:
 				price += level_grid[i][j].price
+	print("price: $", price)
 	return price
 
 func validate_circuit():
@@ -99,35 +128,39 @@ func validate_circuit():
 					var direction = dirs[d];
 					var x = i + direction.x
 					var y = j + direction.y
-					if xnor(tile.valid[(d - tile.dir)%4], get_valid(x, y, d, tile.type)):
+										
+					if tile.valid[(4 + d - tile.dir)%4] and get_valid(x, y, d, tile):
 						connections+=1
 				if connections != 2:
 					tile_flag = false
 					flag = false
-					print("tile at ", i, ",", j, " has an invalid connection")
 			else:
 				for d in range(4):
 					var direction = dirs[d];
 					var x = i + direction.x
 					var y = j + direction.y
-					if not xnor(tile.valid[(d - tile.dir)%4], get_valid(x, y, d, tile.type)):
+					if xor(tile.valid[(4 + d - tile.dir)%4], get_valid(x, y, d, tile)):
 						tile_flag = false
 						flag = false
-				if not tile_flag:
-					print("tile at ", i, ",", j, " has an invalid connection")
+			if not tile_flag:
+				print("tile at ", i, ",", j, " has an invalid connection")
 	return flag
 
-func xnor(a, b):
-	return (a and b) or ((not a) and (not b))
+func xor(a, b):
+	return ((not a) and b) or (a and (not b))
 	
-func get_valid(x, y, d, type1):
-	if (not x in range(5)) or (not y in range(5)):
+func get_valid(x, y, d, tile1):
+	if (not x in range(grid_size)) or (not y in range(grid_size)):
 		return false
-	d = (d-2)%4
-	var tile = level_grid[x][y]
-	if not tile.valid[(d - tile.dir)%4]:
+	var dprev = d
+	d = (d+2)%4
+	var type1 = tile1.type
+	var tile2 = level_grid[x][y]
+	var type2 = tile2.type
+	if type2 == "bulb":
+		return tile1.valid[(4 + dprev - tile1.dir)%4]
+	if not tile2.valid[(4 + d - tile2.dir)%4]:
 		return false
-	var type2 = tile.type
 	if ((type1 in ["ac", "as", "a3"]) and (type2 in ["cc", "cs", "c3"])) or ((type2 in ["ac", "as", "a3"]) and (type1 in ["cc", "cs", "c3"])):
 		return false;
 	return true
@@ -142,7 +175,10 @@ func analyze_circuit():
 	if not validate_circuit():
 		print("circuit is not valid")
 		return
+	
+	print("circuit is valid")
 	var start = find_battery()
+	
 	
 	
 	
