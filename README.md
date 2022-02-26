@@ -1,4 +1,4 @@
-# 1501A5
+COMP 1501 Assignment 5
 
 Hilbert's Factory
 

@@ -11,58 +11,10 @@ export (int) var y_off = 154
 var tiles = define_tiles()
 var dirs = [Vector2(1,0), Vector2(0,-1), Vector2(-1,0), Vector2(0,1)]
 
-func gen_empty_grid():
-	var grid = []
-	
-	for i in range(grid_size):
-		grid.append([])
-		for j in range(grid_size):
-			grid[i].append(gen_tile("empty", 0, true))
-	return grid
-
-func gen_level1(grid):
-	grid[0][0] = gen_tile("cc", 0, false)
-	grid[0][1] = gen_tile("battery", 3, false)
-	grid[0][2] = gen_tile("a3", 1, false)
-	grid[0][3] = gen_tile("bulb", 0, false)
-	grid[2][1] = gen_tile("filled", 0, false)
-	return grid
-	
-func level1_solution(grid):
-	grid[1][0] = gen_tile("splice", 0, true)
-	grid[1][2] = gen_tile("res_small", 0, true)
-	grid[1][3] = gen_tile("as", 0, true)
-	grid[2][0] = gen_tile("as", 0, true)
-	grid[2][2] = gen_tile("a3", 0, true)
-	grid[2][3] = gen_tile("ac", 2, true)
-	grid[3][0] = gen_tile("ac", 3, true)
-	grid[3][1] = gen_tile("as", 1, true)
-	grid[3][2] = gen_tile("ac", 2, true)
-	return grid
-
-func gen_level2(grid):
-	grid[0][3] = gen_tile("bulb", 0, false)
-	grid[1][3] = gen_tile("a3", 2, false)
-	grid[2][0] = gen_tile("battery", 0, false)
-	grid[2][2] = gen_tile("bulb", 0, false)
-	return grid
-
-func level2_solution(grid):
-	grid[0][0] = gen_tile("ac", 0, true)
-	grid[0][1] = gen_tile("as", 1, true)
-	grid[0][2] = gen_tile("as", 1, true)
-	grid[1][0] = gen_tile("as", 0, true)
-	grid[1][2] = gen_tile("ac", 0, true)
-	grid[2][3] = gen_tile("res_small", 0, true)
-	grid[3][0] = gen_tile("ac", 3, true)
-	grid[3][1] = gen_tile("as", 1, true)
-	grid[3][2] = gen_tile("a3", 3, false)
-	grid[3][3] = gen_tile("ac", 2, true)
-	return grid
-
 func _ready():
 	#level_grid = gen_level1(gen_empty_grid())
 	level_grid = level1_solution(gen_level1(gen_empty_grid()))
+	
 	#level_grid = gen_level2(gen_empty_grid())
 	#level_grid = level2_solution(gen_level2(gen_empty_grid()))
 	
@@ -79,7 +31,11 @@ func _process(delta):
 # Convert grid coordinates to pixel values
 func grid_to_pixel(x, y):
 	return Vector2(x * x_off + x_start, y * y_off + y_start)
-		
+	
+
+# Convert pixel values to grid coordinates
+func pixel_to_grid(x, y):
+	return Vector2((x - x_start) / x_off, (y - y_start) / y_off)
 
 # Draw each tile in the level grid
 func draw_level():
@@ -180,8 +136,54 @@ func analyze_circuit():
 	var start = find_battery()
 	
 	
+func gen_empty_grid():
+	var grid = []
 	
+	for i in range(grid_size):
+		grid.append([])
+		for _j in range(grid_size):
+			grid[i].append(gen_tile("empty", 0, true))
+	return grid
+
+func gen_level1(grid):
+	grid[0][0] = gen_tile("cc", 0, false)
+	grid[0][1] = gen_tile("battery", 3, false)
+	grid[0][2] = gen_tile("a3", 1, false)
+	grid[0][3] = gen_tile("bulb", 0, false)
+	grid[2][1] = gen_tile("filled", 0, false)
+	return grid
 	
+func level1_solution(grid):
+	grid[1][0] = gen_tile("splice", 0, true)
+	grid[1][2] = gen_tile("res_small", 0, true)
+	grid[1][3] = gen_tile("as", 0, true)
+	grid[2][0] = gen_tile("as", 0, true)
+	grid[2][2] = gen_tile("a3", 0, true)
+	grid[2][3] = gen_tile("ac", 2, true)
+	grid[3][0] = gen_tile("ac", 3, true)
+	grid[3][1] = gen_tile("as", 1, true)
+	grid[3][2] = gen_tile("ac", 2, true)
+	return grid
+
+func gen_level2(grid):
+	grid[0][3] = gen_tile("bulb", 0, false)
+	grid[1][3] = gen_tile("a3", 2, false)
+	grid[2][0] = gen_tile("battery", 0, false)
+	grid[2][2] = gen_tile("bulb", 0, false)
+	return grid
+
+func level2_solution(grid):
+	grid[0][0] = gen_tile("ac", 0, true)
+	grid[0][1] = gen_tile("as", 1, true)
+	grid[0][2] = gen_tile("as", 1, true)
+	grid[1][0] = gen_tile("as", 0, true)
+	grid[1][2] = gen_tile("ac", 0, true)
+	grid[2][3] = gen_tile("res_small", 0, true)
+	grid[3][0] = gen_tile("ac", 3, true)
+	grid[3][1] = gen_tile("as", 1, true)
+	grid[3][2] = gen_tile("a3", 3, false)
+	grid[3][3] = gen_tile("ac", 2, true)
+	return grid
 
 func define_tiles():
 	return {
