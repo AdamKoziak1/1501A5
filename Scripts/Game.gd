@@ -5,8 +5,8 @@ var level_grid
 export (int) var grid_size = 5
 export (int) var x_start = 90
 export (int) var y_start = 90
-export (int) var x_off = 150
-export (int) var y_off = 150
+export (int) var x_off = 154
+export (int) var y_off = 154
 
 var tiles = define_tiles()
 var dirs = [Vector2(1,0), Vector2(0,-1), Vector2(-1,0), Vector2(0,1)]

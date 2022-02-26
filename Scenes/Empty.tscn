@@ -4,6 +4,7 @@
 [ext_resource path="res://Scenes/Tile.tscn" type="PackedScene" id=2]
 
 [node name="Tile" instance=ExtResource( 2 )]
+scale = Vector2( 1.04, 1.04 )
 
 [node name="Sprite" parent="." index="0"]
 texture = ExtResource( 1 )
