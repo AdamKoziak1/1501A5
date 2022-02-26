@@ -13,19 +13,21 @@ var dirs = [Vector2(1,0), Vector2(0,-1), Vector2(-1,0), Vector2(0,1)]
 
 func _ready():
 	#level_grid = gen_level1(gen_empty_grid())
-	level_grid = level1_solution(gen_level1(gen_empty_grid()))
-	
+	#level_grid = level1_solution(gen_level1(gen_empty_grid()))
 	#level_grid = gen_level2(gen_empty_grid())
-	#level_grid = level2_solution(gen_level2(gen_empty_grid()))
+	level_grid = level2_solution(gen_level2(gen_empty_grid()))
+
+# Check for input every frame
+func select_level1():
+	level_grid = gen_level1(gen_empty_grid())
 	
+func select_level2():
+	level_grid = gen_level2(gen_empty_grid())
+	
+func _process(delta):
 	draw_level()
 	calculate_price()
 	analyze_circuit()
-	
-
-# Check for input every frame
-func _process(delta):
-	pass
 	
 
 # Convert grid coordinates to pixel values
@@ -253,3 +255,5 @@ func define_tiles():
 			"resistance":0.2,
 			"valid":[true, false, true, false]}, # right and left
 	}
+
+

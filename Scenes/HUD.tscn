@@ -1,0 +1,90 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Sprites/Xolonium-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://Scenes/HUD.gd" type="Script" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 128
+outline_color = Color( 0.027451, 0, 0, 1 )
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 64
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=3]
+size = 25
+font_data = ExtResource( 1 )
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource( 2 )
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+margin_right = 1400.0
+margin_bottom = 798.0
+color = Color( 0.941176, 0.596078, 0.0588235, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+margin_left = 11.0
+margin_top = 9.0
+margin_right = 1389.0
+margin_bottom = 790.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Message" type="Label" parent="."]
+margin_left = 127.0
+margin_top = 148.0
+margin_right = 1270.0
+margin_bottom = 371.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "Hillbert's Factory"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Level1" type="Button" parent="."]
+margin_left = 289.0
+margin_top = 540.0
+margin_right = 545.0
+margin_bottom = 633.0
+custom_fonts/font = SubResource( 2 )
+text = "Level 1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Run" type="Button" parent="."]
+visible = false
+anchor_right = 0.015
+anchor_bottom = 0.012
+margin_left = 842.0
+margin_top = 76.0
+margin_right = 903.0
+margin_bottom = 120.4
+custom_fonts/font = SubResource( 3 )
+text = "Run"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Level2" type="Button" parent="."]
+margin_left = 790.0
+margin_top = 546.0
+margin_right = 1054.0
+margin_bottom = 632.0
+custom_fonts/font = SubResource( 2 )
+text = "Level 2"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="Level1" to="." method="_on_Level1_pressed"]
+[connection signal="pressed" from="Run" to="." method="_on_Run_pressed"]
+[connection signal="pressed" from="Level2" to="." method="_on_Level2_pressed"]
