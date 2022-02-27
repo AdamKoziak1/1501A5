@@ -186,6 +186,7 @@ func gen_level1(grid):
 	grid[0][2] = gen_tile("a3", 1, false)
 	grid[0][3] = gen_tile("bulb", 0, false)
 	grid[2][1] = gen_tile("filled", 0, false)
+	#grid[3][3] = gen_tile("ac", 0, true) #for testing, remove later
 	return grid
 	
 func level1_solution(grid):
@@ -219,6 +220,8 @@ func level2_solution(grid):
 	grid[3][2] = gen_tile("a3", 3, false)
 	grid[3][3] = gen_tile("ac", 2, true)
 	return grid
+
+
 
 func define_tiles():
 	return {
