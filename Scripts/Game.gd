@@ -2,6 +2,9 @@ extends Node2D
 
 var level_grid
 
+#signal bulb_on
+#signal bulb_explode
+
 export (int) var grid_size = 5
 export (int) var x_start = 90
 export (int) var y_start = 90
@@ -13,22 +16,26 @@ var dirs = [Vector2(1,0), Vector2(0,-1), Vector2(-1,0), Vector2(0,1)]
 
 func _ready():
 	level_grid = gen_empty_grid()
-	#level_grid = gen_level1(gen_empty_grid())
-	#level_grid = level1_solution(gen_level1(gen_empty_grid()))
-	#level_grid = gen_level2(gen_empty_grid())
-	#level_grid = level2_solution(gen_level2(gen_empty_grid()))
 
 # Check for input every frame
 func select_level1():
 	level_grid = gen_level1(gen_empty_grid())
+	calculate_price()
 	
 func select_level2():
 	level_grid = gen_level2(gen_empty_grid())
+	calculate_price()
 	
+func solve_level1():
+	level_grid = level1_solution(gen_level1(gen_empty_grid()))
+	calculate_price()
+	
+func solve_level2():
+	level_grid = level2_solution(gen_level2(gen_empty_grid()))
+	calculate_price()
+
 func _process(delta):
 	draw_level()
-	#calculate_price()
-	#analyze_circuit()
 	
 
 # Convert grid coordinates to pixel values
@@ -70,6 +77,7 @@ func calculate_price():
 			if level_grid[i][j].movable:
 				price += level_grid[i][j].price
 	print("price: $", price)
+	$HUD/Cost.text = "Cost: $" + str(price)
 	return price
 
 func validate_circuit():
@@ -130,7 +138,7 @@ func find_battery():
 			if level_grid[i][j].type == "battery":
 				return Vector2(i, j)
 
-func analyze_circuit():
+func analyze_circuit(): 
 	if not validate_circuit():
 		print("circuit is not valid")
 		return
@@ -138,6 +146,7 @@ func analyze_circuit():
 	print("circuit is valid")
 	var start = find_battery()
 	var d = (level_grid[start.x][start.y].dir + 2)%4 # facing out of the negative terminal to follow current flow
+	
 
 func _on_HUD_analyze():
 	analyze_circuit()
