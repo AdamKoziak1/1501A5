@@ -37,14 +37,7 @@ func level_mode():
 	$Run.show()
 	$Cost.show()
 
-func solve_pressed():
-	if level == 1:
-		emit_signal("solve_level1")
-	if level == 2:
-		emit_signal("solve_level2")
-		
-
-func _on_exit_pressed():
+func menu_mode():
 	level = 0
 	$solve.hide()
 	$exit.hide()
@@ -55,3 +48,11 @@ func _on_exit_pressed():
 	$Level2.show()
 	$Run.hide()
 	$Cost.hide()
+
+func solve_pressed():
+	if level == 1:
+		emit_signal("solve_level1")
+	if level == 2:
+		emit_signal("solve_level2")
+		
+

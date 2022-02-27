@@ -129,6 +129,6 @@ __meta__ = {
 
 [connection signal="pressed" from="Level1" to="." method="_on_Level1_pressed"]
 [connection signal="pressed" from="solve" to="." method="solve_pressed"]
-[connection signal="pressed" from="exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="exit" to="." method="menu_mode"]
 [connection signal="pressed" from="Run" to="." method="_on_Run_pressed"]
 [connection signal="pressed" from="Level2" to="." method="_on_Level2_pressed"]
