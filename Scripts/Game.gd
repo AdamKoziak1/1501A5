@@ -282,10 +282,20 @@ func define_tiles():
 			"price":0,
 			"resistance":1,
 			"valid":[true, true, true, true]}, # all, processed later so only any two edges can be connected
+		"ExplodingBulb":
+			{"scene":preload("res://Scenes/ExplodingLightbulb.tscn"), 
+			"price":0,
+			"resistance":1,
+			"valid":[true, true, true, true]}, # all, processed later so only any two edges can be connected
 		"splice":
 			{"scene":preload("res://Scenes/SpliceConnector.tscn"), 
 			"price":10,
 			"resistance":0.2,
 			"valid":[true, false, true, false]}, # right and left
 	}
-
+	
+	#if(level_grid == gen_level1(gen_empty_grid())):
+	#	grid[0][3] = gen_tile("ExplodingBulb", 0, false)
+	#else:
+	#	grid[0][3] = gen_tile("ExplodingBulb", 0, false)
+	#	grid[2][2] = gen_tile("ExplodingBulb", 0, false)
