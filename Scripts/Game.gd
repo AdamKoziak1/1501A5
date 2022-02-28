@@ -75,7 +75,10 @@ func draw_level():
 # generates a tile 'object' with all the required information about it
 func gen_tile(type, dir, movable):
 	if type == "nothing":
-		return {"type": "nothing"}
+		return {"type": "nothing",
+		"movable": false,
+		"dir":0,
+		}
 	var vars = tiles[type]
 	return {
 			"type": type, 
@@ -210,9 +213,16 @@ func _on_Tile_dropped(position) -> void:
 			level_grid[selected_origin.x][selected_origin.y] = gen_tile("empty", 0, true)
 		level_grid[pos.x][pos.y] = gen_tile(selected_type, selected_dir, true);
 	elif not ((pos.x in range(5)) and (pos.y in range(5))):
-		level_grid[selected_origin.x][selected_origin.y] = gen_tile("empty", 0, true)
+		if not level_grid[pos.x][pos.y].type == "nothing":
+			level_grid[selected_origin.x][selected_origin.y] = gen_tile("empty", 0, true)
 	draw_level()
 	calculate_price()
+
+func _on_HUD_boom():
+	for i in range(grid_height):
+		for j in range(grid_height):
+			if level_grid[i][j].type == "bulb":
+				level_grid[i][j] = gen_tile("ExplodingBulb", 0, false)
 
 func gen_inventory(grid):
 	grid[6][2] = gen_tile("ac", 0, true)
@@ -362,5 +372,4 @@ func define_tiles():
 	#else:
 	#	grid[0][3] = gen_tile("ExplodingBulb", 0, false)
 	#	grid[2][2] = gen_tile("ExplodingBulb", 0, false)
-
 

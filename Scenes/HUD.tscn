@@ -37,9 +37,6 @@ margin_left = 11.0
 margin_top = 9.0
 margin_right = 1389.0
 margin_bottom = 790.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Name" type="Label" parent="."]
 margin_left = 129.0
@@ -67,10 +64,10 @@ __meta__ = {
 
 [node name="solve" type="Button" parent="."]
 visible = false
-margin_left = 1172.0
-margin_top = 8.0
-margin_right = 1272.0
-margin_bottom = 51.0
+margin_left = 1165.0
+margin_top = 25.0
+margin_right = 1265.0
+margin_bottom = 68.0
 custom_fonts/font = SubResource( 2 )
 text = "Solve"
 __meta__ = {
@@ -79,10 +76,10 @@ __meta__ = {
 
 [node name="exit" type="Button" parent="."]
 visible = false
-margin_left = 1288.0
-margin_top = 9.0
-margin_right = 1388.0
-margin_bottom = 52.0
+margin_left = 1273.0
+margin_top = 24.0
+margin_right = 1374.0
+margin_bottom = 67.0
 custom_fonts/font = SubResource( 2 )
 text = "Menu"
 __meta__ = {
@@ -99,6 +96,20 @@ margin_right = 903.0
 margin_bottom = 120.4
 custom_fonts/font = SubResource( 3 )
 text = "Run"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Boom" type="Button" parent="."]
+visible = false
+anchor_right = 0.015
+anchor_bottom = 0.012
+margin_left = 1220.0
+margin_top = 81.0
+margin_right = 1297.0
+margin_bottom = 125.4
+custom_fonts/font = SubResource( 3 )
+text = "Boom!"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -132,4 +143,5 @@ __meta__ = {
 [connection signal="pressed" from="solve" to="." method="solve_pressed"]
 [connection signal="pressed" from="exit" to="." method="menu_mode"]
 [connection signal="pressed" from="Run" to="." method="_on_Run_pressed"]
+[connection signal="pressed" from="Boom" to="." method="_on_Boom_pressed"]
 [connection signal="pressed" from="Level2" to="." method="_on_Level2_pressed"]

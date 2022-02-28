@@ -22,5 +22,5 @@ position = Vector2( 101.75, 84.25 )
 scale = Vector2( 14.5667, 12.2333 )
 frames = SubResource( 1 )
 animation = "Exploding"
-frame = 2
+frame = 1
 playing = true

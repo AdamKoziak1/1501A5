@@ -5,6 +5,7 @@ signal start_level2
 signal solve_level1
 signal solve_level2
 signal analyze
+signal boom
 
 func MessageText(text):
 	$Name.text = text
@@ -27,6 +28,7 @@ func _on_Run_pressed() -> void:
 	emit_signal("analyze")
 
 func level_mode():
+	$Boom.show()
 	$solve.show()
 	$exit.show()
 	$Level1.hide()
@@ -40,6 +42,7 @@ func level_mode():
 func menu_mode():
 	level = 0
 	$solve.hide()
+	$Boom.hide()
 	$exit.hide()
 	$Level1.show()
 	$Name.show()
@@ -55,4 +58,3 @@ func solve_pressed():
 	if level == 2:
 		emit_signal("solve_level2")
 		
-
