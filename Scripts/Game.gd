@@ -17,6 +17,8 @@ var dirs = [Vector2(1,0), Vector2(0,-1), Vector2(-1,0), Vector2(0,1)]
 
 var selected_type
 var selected_dir
+var selected_movable
+var selected_origin
 
 func _ready():
 	level_grid = gen_empty_grid()
@@ -183,27 +185,34 @@ func analyze_circuit():
 
 func _on_HUD_analyze():
 	analyze_circuit()
-	
-
-func _on_Tile_dropped(position) -> void:
-	var pos = pixel_to_grid(position.x, position.y)
-	print(pos)
-	if (pos.x in range(5)) and (pos.y in range(5)) and level_grid[pos.x][pos.y].movable:
-		level_grid[pos.x][pos.y] = gen_tile(selected_type, selected_dir, true);
-	draw_level()
-	calculate_price()
-	
 
 func _on_Tile_rotated(dir) -> void:
 	selected_dir = (selected_dir + dir + 4)%4
 
 func _on_Tile_selected(pos) -> void:
-	selected_dir = 0
-	print(pos)
 	var index = pixel_to_grid(pos.x, pos.y)
 	var tile = level_grid[index.x][index.y]
-	print(tile.type)
+	selected_movable = tile.movable
+	selected_origin = index
+	selected_dir = tile.dir
 	selected_type = tile.type
+
+func _on_Tile_dropped(position) -> void:
+	if not selected_movable:
+		draw_level()
+		calculate_price()
+		return
+	
+	var pos = pixel_to_grid(position.x, position.y)
+	var tile = level_grid[pos.x][pos.y]
+	if (pos.x in range(5)) and (pos.y in range(5)) and level_grid[pos.x][pos.y].movable:
+		if (selected_origin.x in range(5)) and (selected_origin.y in range(5)):
+			level_grid[selected_origin.x][selected_origin.y] = gen_tile("empty", 0, true)
+		level_grid[pos.x][pos.y] = gen_tile(selected_type, selected_dir, true);
+	elif not ((pos.x in range(5)) and (pos.y in range(5))):
+		level_grid[selected_origin.x][selected_origin.y] = gen_tile("empty", 0, true)
+	draw_level()
+	calculate_price()
 
 func gen_inventory(grid):
 	grid[6][2] = gen_tile("ac", 0, true)
