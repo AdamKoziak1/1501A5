@@ -210,8 +210,9 @@ func _on_Tile_dropped(position) -> void:
 			level_grid[selected_origin.x][selected_origin.y] = gen_tile("empty", 0, true)
 		level_grid[pos.x][pos.y] = gen_tile(selected_type, selected_dir, true);
 	elif not ((pos.x in range(5)) and (pos.y in range(5))):
-		if not level_grid[pos.x][pos.y].type == "nothing":
-			level_grid[selected_origin.x][selected_origin.y] = gen_tile("empty", 0, true)
+		if level_grid[pos.x][pos.y].type == "nothing":
+			if not ((selected_origin.x in range(6,8)) and (selected_origin.y in range(2,4))):
+				level_grid[selected_origin.x][selected_origin.y] = gen_tile("empty", 0, true)
 	draw_level()
 	calculate_price()
 
