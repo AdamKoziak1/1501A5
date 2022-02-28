@@ -1,15 +1,24 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Tile.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Audio/bgsong.mp3" type="AudioStream" id=4]
+[ext_resource path="res://Scenes/ExplodingLightbulb.tscn" type="PackedScene" id=5]
 
 [node name="Game" type="Node2D"]
 light_mask = 3
 script = ExtResource( 1 )
 
 [node name="HUD" parent="." instance=ExtResource( 2 )]
+
+[node name="Boom2" parent="HUD" instance=ExtResource( 5 )]
+visible = false
+position = Vector2( 320, -26 )
+
+[node name="Boom3" parent="HUD" instance=ExtResource( 5 )]
+visible = false
+position = Vector2( 10, 138 )
 
 [node name="Tile" parent="." instance=ExtResource( 3 )]
 visible = false

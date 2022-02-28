@@ -58,3 +58,11 @@ func solve_pressed():
 	if level == 2:
 		emit_signal("solve_level2")
 		
+
+
+func _on_Boom_pressed() -> void:
+	if level == 1:
+		$Boom3.show()
+	if level == 2:
+		$Boom2.show()
+		$Boom3.show()
