@@ -36,6 +36,7 @@ func solve_level2():
 	calculate_price()
 
 func _process(delta):
+	pass
 	draw_level()
 	
 
@@ -53,15 +54,19 @@ func draw_level():
 	for i in range(grid_length):
 		for j in range(grid_height): 
 			var vars = level_grid[i][j]
+			if vars.type == "nothing":
+				continue
 			var tile = tiles[vars.type].scene.instance()
 			add_child(tile)
 			var pos = grid_to_pixel(i, j)
 			tile.position = Vector2(pos[0], pos[1])
 			tile.rotation = -vars.dir*PI/2
-			
+				
 
 # generates a tile 'object' with all the required information about it
 func gen_tile(type, dir, movable):
+	if type == "nothing":
+		return {"type": "nothing"}
 	var vars = tiles[type]
 	return {
 			"type": type, 
@@ -190,6 +195,11 @@ func gen_empty_grid():
 		grid.append([])
 		for _j in range(grid_height):
 			grid[i].append(gen_tile("empty", 0, true))
+	for i in range(5):
+		grid[5][i] = gen_tile("nothing", 0, false)
+	for i in range(3):
+		for j in range(2):
+			grid[6+i][j] = gen_tile("nothing", 0, false)
 	return grid
 
 func gen_level1(grid):
@@ -237,6 +247,7 @@ func level2_solution(grid):
 
 func define_tiles():
 	return {
+		"nothing": null,
 		"empty":
 			{"scene":preload("res://Scenes/Empty.tscn"), 
 			"price":0,
@@ -317,4 +328,4 @@ func define_tiles():
 
 
 func _on_Tile_dropped() -> void:
-	
+	pass
