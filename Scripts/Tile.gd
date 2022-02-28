@@ -4,6 +4,8 @@ signal dropped
 var selected = false
 var grid_x
 var grid_y
+var dir
+var type
 
 func _ready():
 	#rest_nodes = get_tree().get_nodes_in_group("zone")
@@ -12,6 +14,8 @@ func _ready():
 	#spawn_point[0].select()
 	rotation = 0
 
+func set_type(tile_type):
+	type = tile_type
 
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	if Input.is_action_just_pressed("click"):
@@ -25,6 +29,7 @@ func _physics_process(delta):
 			rotation = rotation - smallest_rotation
 		if Input.is_action_just_pressed("rotateRight"):
 			rotation = rotation + smallest_rotation
+		z_index = 999
 	#else:
 		#global_position = lerp(global_position, rest_point, 10 * delta)
 
@@ -32,7 +37,7 @@ func _input(event) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT and not event.pressed:
 			selected = false
-			emit_signal("dropped")
+			emit_signal("dropped", rotation, get_global_mouse_position())
 			
 			#var shortest_dist = 75
 			#for child in spawn_point:

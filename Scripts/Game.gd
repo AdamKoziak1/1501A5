@@ -176,6 +176,13 @@ func analyze_circuit():
 
 func _on_HUD_analyze():
 	analyze_circuit()
+	
+
+func _on_Tile_dropped(rotation, position) -> void:
+	print(rotation, " ", position)
+	var pos = pixel_to_grid(position.x, position.y)
+	print(pos)
+	pass
 
 func gen_inventory(grid):
 	grid[6][2] = gen_tile("ac", 2, true)
@@ -327,5 +334,3 @@ func define_tiles():
 	#	grid[2][2] = gen_tile("ExplodingBulb", 0, false)
 
 
-func _on_Tile_dropped() -> void:
-	pass
