@@ -5,7 +5,8 @@ var level_grid
 #signal bulb_on
 #signal bulb_explode
 
-export (int) var grid_size = 5
+export (int) var grid_length = 9
+export (int) var grid_height = 5
 export (int) var x_start = 90
 export (int) var y_start = 90
 export (int) var x_off = 154
@@ -49,8 +50,8 @@ func pixel_to_grid(x, y):
 
 # for each index, it gets what tile type is there, instances a tile icon of that kind, places it at the correct location and rotation
 func draw_level():
-	for i in range(grid_size):
-		for j in range(grid_size): 
+	for i in range(grid_length):
+		for j in range(grid_height): 
 			var vars = level_grid[i][j]
 			var tile = tiles[vars.type].scene.instance()
 			add_child(tile)
@@ -74,8 +75,8 @@ func gen_tile(type, dir, movable):
 # iterates through each tile and sums each price. updates the label.
 func calculate_price():
 	var price = 0
-	for i in range(grid_size):
-		for j in range(grid_size):
+	for i in range(grid_height):
+		for j in range(grid_height):
 			if level_grid[i][j].movable:
 				price += level_grid[i][j].price
 	print("price: $", price)
@@ -89,8 +90,8 @@ func calculate_price():
 # bulbs are uniquely handled. they can be connected to from all 4 sides, but only two valid connections are allowed. valid connections are counted, any number other than 2 is invalid.
 func validate_circuit():
 	var flag = true
-	for j in range(grid_size):
-		for i in range(grid_size):
+	for j in range(grid_length):
+		for i in range(grid_height):
 			var tile_flag = true
 			var tile = level_grid[i][j]
 			
@@ -132,7 +133,7 @@ func xor(a, b):
 # the final case to check for is that no aluminum wire pieces connect to a copper piece. 
 # if none of those cases are triggered, the connection is considered valid.
 func get_valid(x, y, d, tile1):
-	if (not x in range(grid_size)) or (not y in range(grid_size)):
+	if (not x in range(grid_length)) or (not y in range(grid_height)):
 		return false
 	var dprev = d
 	d = (d+2)%4
@@ -149,8 +150,8 @@ func get_valid(x, y, d, tile1):
 
 # iterates through the board to find the battery, returns the index
 func find_battery():
-	for i in range(grid_size):
-		for j in range(grid_size):
+	for i in range(grid_length):
+		for j in range(grid_height):
 			if level_grid[i][j].type == "battery":
 				return Vector2(i, j)
 
@@ -170,13 +171,24 @@ func analyze_circuit():
 
 func _on_HUD_analyze():
 	analyze_circuit()
+
+func gen_inventory(grid):
+	grid[6][2] = gen_tile("ac", 2, true)
+	grid[7][2] = gen_tile("as", 0, true)
+	grid[8][2] = gen_tile("a3", 0, true)
+	grid[6][3] = gen_tile("cc", 0, true)
+	grid[7][3] = gen_tile("c3", 1, true)
+	grid[8][3] = gen_tile("cs", 0, true)
+	grid[6][4] = gen_tile("splice", 0, true)
+	grid[7][4] = gen_tile("res_small", 0, true)
+	grid[8][4] = gen_tile("res_large", 0, true)
 	
 func gen_empty_grid():
 	var grid = []
 	
-	for i in range(grid_size):
+	for i in range(grid_length):
 		grid.append([])
-		for _j in range(grid_size):
+		for _j in range(grid_height):
 			grid[i].append(gen_tile("empty", 0, true))
 	return grid
 
@@ -186,6 +198,7 @@ func gen_level1(grid):
 	grid[0][2] = gen_tile("a3", 1, false)
 	grid[0][3] = gen_tile("bulb", 0, false)
 	grid[2][1] = gen_tile("filled", 0, false)
+	gen_inventory(grid)
 	#grid[3][3] = gen_tile("ac", 0, true) #for testing, remove later
 	return grid
 	
@@ -206,6 +219,7 @@ func gen_level2(grid):
 	grid[1][3] = gen_tile("a3", 2, false)
 	grid[2][0] = gen_tile("battery", 0, false)
 	grid[2][2] = gen_tile("bulb", 0, false)
+	gen_inventory(grid)
 	return grid
 
 func level2_solution(grid):
@@ -220,8 +234,6 @@ func level2_solution(grid):
 	grid[3][2] = gen_tile("a3", 3, false)
 	grid[3][3] = gen_tile("ac", 2, true)
 	return grid
-
-
 
 func define_tiles():
 	return {
@@ -302,3 +314,7 @@ func define_tiles():
 	#else:
 	#	grid[0][3] = gen_tile("ExplodingBulb", 0, false)
 	#	grid[2][2] = gen_tile("ExplodingBulb", 0, false)
+
+
+func _on_Tile_dropped() -> void:
+	

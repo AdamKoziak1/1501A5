@@ -28,12 +28,13 @@ func _physics_process(delta):
 	#else:
 		#global_position = lerp(global_position, rest_point, 10 * delta)
 
-func _input(event):
+func _input(event) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT and not event.pressed:
 			selected = false
 			emit_signal("dropped")
-			var shortest_dist = 75
+			
+			#var shortest_dist = 75
 			#for child in spawn_point:
 			#	var distance = global_position.distance_to(child.global_position)
 			#	if distance < shortest_dist:

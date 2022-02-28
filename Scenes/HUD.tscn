@@ -116,11 +116,12 @@ __meta__ = {
 
 [node name="Cost" type="Label" parent="."]
 visible = false
-margin_left = 817.0
+light_mask = 3
+margin_left = 800.0
 margin_top = 25.0
-margin_right = 1162.0
+margin_right = 1145.0
 margin_bottom = 72.0
-custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color = Color( 0.0117647, 0.00392157, 0.00392157, 1 )
 custom_fonts/font = SubResource( 4 )
 text = "Cost: $"
 __meta__ = {

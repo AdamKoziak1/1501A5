@@ -1,15 +1,25 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Tile.tscn" type="PackedScene" id=3]
 
 [node name="Game" type="Node2D"]
+light_mask = 3
 script = ExtResource( 1 )
+grid_length = null
+grid_height = null
+x_start = null
+y_start = null
+x_off = null
+y_off = null
 
 [node name="HUD" parent="." instance=ExtResource( 2 )]
 
-[connection signal="analyze" from="HUD" to="." method="_on_HUD_analyze"]
+[node name="Tile" parent="." instance=ExtResource( 3 )]
+
 [connection signal="solve_level1" from="HUD" to="." method="solve_level1"]
 [connection signal="solve_level2" from="HUD" to="." method="solve_level2"]
 [connection signal="start_level1" from="HUD" to="." method="select_level1"]
 [connection signal="start_level2" from="HUD" to="." method="select_level2"]
+[connection signal="dropped" from="Tile" to="." method="_on_Tile_dropped"]
