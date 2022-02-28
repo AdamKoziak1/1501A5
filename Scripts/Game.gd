@@ -24,22 +24,27 @@ func _ready():
 # Check for input every frame
 func select_level1():
 	level_grid = gen_level1(gen_empty_grid())
+	draw_level()
 	calculate_price()
 	
 func select_level2():
 	level_grid = gen_level2(gen_empty_grid())
+	draw_level()
 	calculate_price()
 	
 func solve_level1():
 	level_grid = level1_solution(gen_level1(gen_empty_grid()))
+	draw_level()
 	calculate_price()
 	
 func solve_level2():
 	level_grid = level2_solution(gen_level2(gen_empty_grid()))
+	draw_level()
 	calculate_price()
 
 func _process(delta):
-	draw_level()
+	pass
+	#draw_level()
 	
 
 # Convert grid coordinates to pixel values
@@ -185,6 +190,8 @@ func _on_Tile_dropped(position) -> void:
 	print(pos)
 	if (pos.x in range(5)) and (pos.y in range(5)) and level_grid[pos.x][pos.y].movable:
 		level_grid[pos.x][pos.y] = gen_tile(selected_type, selected_dir, true);
+	draw_level()
+	calculate_price()
 	
 
 func _on_Tile_rotated(dir) -> void:
