@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scripts/Game.gd" type="Script" id=1]
 [ext_resource path="res://Scenes/HUD.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Scenes/Tile.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Audio/bgsong.mp3" type="AudioStream" id=4]
 
 [node name="Game" type="Node2D"]
 light_mask = 3
@@ -12,6 +13,10 @@ script = ExtResource( 1 )
 
 [node name="Tile" parent="." instance=ExtResource( 3 )]
 visible = false
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+autoplay = true
 
 [connection signal="boom" from="HUD" to="." method="_on_HUD_boom"]
 [connection signal="solve_level1" from="HUD" to="." method="solve_level1"]

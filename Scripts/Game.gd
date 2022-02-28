@@ -2,9 +2,6 @@ extends Node2D
 
 var level_grid
 
-#signal bulb_on
-#signal bulb_explode
-
 export (int) var grid_length = 9
 export (int) var grid_height = 5
 export (int) var x_start = 90
@@ -167,7 +164,7 @@ func get_valid(x, y, d, tile1):
 
 # iterates through the board to find the battery, returns the index
 func find_battery():
-	for i in range(grid_length):
+	for i in range(grid_height):
 		for j in range(grid_height):
 			if level_grid[i][j].type == "battery":
 				return Vector2(i, j)
@@ -223,6 +220,7 @@ func _on_HUD_boom():
 		for j in range(grid_height):
 			if level_grid[i][j].type == "bulb":
 				level_grid[i][j] = gen_tile("ExplodingBulb", 0, false)
+	draw_level()
 
 func gen_inventory(grid):
 	grid[6][2] = gen_tile("ac", 0, true)
