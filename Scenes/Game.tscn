@@ -18,3 +18,5 @@ visible = false
 [connection signal="start_level1" from="HUD" to="." method="select_level1"]
 [connection signal="start_level2" from="HUD" to="." method="select_level2"]
 [connection signal="dropped" from="Tile" to="." method="_on_Tile_dropped"]
+[connection signal="rotated" from="Tile" to="." method="_on_Tile_rotated"]
+[connection signal="selected" from="Tile" to="." method="_on_Tile_selected"]

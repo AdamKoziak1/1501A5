@@ -15,6 +15,9 @@ export (int) var y_off = 154
 var tiles = define_tiles()
 var dirs = [Vector2(1,0), Vector2(0,-1), Vector2(-1,0), Vector2(0,1)]
 
+var selected_type
+var selected_dir
+
 func _ready():
 	level_grid = gen_empty_grid()
 
@@ -36,7 +39,6 @@ func solve_level2():
 	calculate_price()
 
 func _process(delta):
-	pass
 	draw_level()
 	
 
@@ -178,18 +180,30 @@ func _on_HUD_analyze():
 	analyze_circuit()
 	
 
-func _on_Tile_dropped(rotation, position) -> void:
-	print(rotation, " ", position)
+func _on_Tile_dropped(position) -> void:
 	var pos = pixel_to_grid(position.x, position.y)
 	print(pos)
-	pass
+	if (pos.x in range(5)) and (pos.y in range(5)) and level_grid[pos.x][pos.y].movable:
+		level_grid[pos.x][pos.y] = gen_tile(selected_type, selected_dir, true);
+	
+
+func _on_Tile_rotated(dir) -> void:
+	selected_dir = (selected_dir + dir + 4)%4
+
+func _on_Tile_selected(pos) -> void:
+	selected_dir = 0
+	print(pos)
+	var index = pixel_to_grid(pos.x, pos.y)
+	var tile = level_grid[index.x][index.y]
+	print(tile.type)
+	selected_type = tile.type
 
 func gen_inventory(grid):
-	grid[6][2] = gen_tile("ac", 2, true)
+	grid[6][2] = gen_tile("ac", 0, true)
 	grid[7][2] = gen_tile("as", 0, true)
 	grid[8][2] = gen_tile("a3", 0, true)
 	grid[6][3] = gen_tile("cc", 0, true)
-	grid[7][3] = gen_tile("c3", 1, true)
+	grid[7][3] = gen_tile("c3", 0, true)
 	grid[8][3] = gen_tile("cs", 0, true)
 	grid[6][4] = gen_tile("splice", 0, true)
 	grid[7][4] = gen_tile("res_small", 0, true)
